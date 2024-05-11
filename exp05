@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="registrationApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="RegistrationController as regCtrl">
+    <h1>User Registration</h1>
+    
+    <!-- Form for user registration -->
+    <form name="registrationForm" ng-submit="regCtrl.submitForm()" novalidate>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" ng-model="regCtrl.user.username" required><br>
+        <div ng-show="registrationForm.username.$dirty && registrationForm.username.$invalid">
+            <span ng-show="registrationForm.username.$error.required">Username is required.</span>
+        </div>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" ng-model="regCtrl.user.email" required><br>
+        <div ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid">
+            <span ng-show="registrationForm.email.$error.required">Email is required.</span>
+            <span ng-show="registrationForm.email.$error.email">Invalid email address.</span>
+        </div>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" ng-model="regCtrl.user.password" required><br>
+        <div ng-show="registrationForm.password.$dirty && registrationForm.password.$invalid">
+            <span ng-show="registrationForm.password.$error.required">Password is required.</span>
+        </div>
+        
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" ng-model="regCtrl.user.confirmPassword" required><br>
+        <div ng-show="registrationForm.confirm_password.$dirty && registrationForm.confirm_password.$invalid">
+            <span ng-show="registrationForm.confirm_password.$error.required">Please confirm your password.</span>
+            <span ng-show="regCtrl.user.password !== regCtrl.user.confirmPassword">Passwords do not match.</span>
+        </div>
+        
+        <button type="submit" ng-disabled="registrationForm.$invalid">Register</button>
+    </form>
+</div>
+
+<script>
+    angular.module('registrationApp', [])
+    .controller('RegistrationController', function() {
+        var self = this;
+        
+        self.user = {
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
+        };
+        
+        self.submitForm = function() {
+            // Process registration here
+            console.log('Registration form submitted:', self.user);
+            // You can add code here to send registration data to server for further processing
+        };
+    });
+</script>
+
+</body>
+</html>
