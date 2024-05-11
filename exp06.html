@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="searchEngineApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engine</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="SearchController as searchCtrl">
+    <h1>Search Engine</h1>
+    
+    <label for="searchInput">Search:</label>
+    <input type="text" id="searchInput" ng-model="searchCtrl.query" ng-keyup="searchCtrl.search()" placeholder="Type to search"><br>
+    
+    <ul>
+        <li ng-repeat="result in searchCtrl.results">{{ result }}</li>
+    </ul>
+</div>
+
+<script>
+    angular.module('searchEngineApp', [])
+    .controller('SearchController', function($scope) {
+        var self = this;
+        
+        // Sample data
+        self.data = [
+            'Apple', 'Banana', 'Orange', 'Mango', 'Grapes', 'Pineapple', 'Kiwi', 'Watermelon'
+        ];
+        
+        self.search = function() {
+            if (self.query) {
+                self.results = self.data.filter(function(item) {
+                    return item.toLowerCase().includes(self.query.toLowerCase());
+                });
+            } else {
+                self.results = [];
+            }
+        };
+    });
+</script>
+
+</body>
+</html>
